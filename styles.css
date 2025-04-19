@@ -1,0 +1,1493 @@
+:root {
+    --primary-color: #00c507;
+    --primary-dark-color: #00a005;
+    --primary-light-color: #9aff9d;
+    --primary-lighter-color: #e5ffe6;
+    --red-color: #FF4B4B;
+    --red-dark-color: #b92424;
+    --orange-color: #ffa500;
+    --orange-dark-color: #ba7900;
+    --grey: #808080;
+    --light-grey: #D3D3D3;
+    --lighter-grey: #F2F2F2;
+    --white: #FFFFFF;
+    --black: #000000;
+    --mid-grey: #666A6D;
+    --dark-medium-grey: #A9A9A9;
+    --background: #FBFBFE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+body {
+    font-family: "Poppins", serif;
+    background: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.poppins-thin {
+    font-family: "Poppins", serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  .poppins-extralight {
+    font-family: "Poppins", serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .poppins-light {
+    font-family: "Poppins", serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .poppins-regular {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .poppins-medium {
+    font-family: "Poppins", serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .poppins-semibold {
+    font-family: "Poppins", serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .poppins-bold {
+    font-family: "Poppins", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .poppins-extrabold {
+    font-family: "Poppins", serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+
+/* ============================================GENERAL============================================== */
+
+.container-20 {
+    border-radius: 20px;
+}
+
+.container-50 {
+    border-radius: 50%;
+}
+
+.icon-text {
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    padding: 5px 10px;
+    gap: 5px;
+    max-width: fit-content;
+    color: var(--white);
+    font-size: 12px;
+}
+
+.icon-text span {
+    font-size: 15px;
+}
+
+.diseases-pad-15 {
+    padding: 15px;
+}
+
+.diseases {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 70px;
+}
+
+.diseases .disease {
+    background: var(--white);
+    padding: 5px 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    border-radius: 5px;
+    width: 100%;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Set number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.diseases .img-container-disease {
+    width: 75%;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.diseases .img-container-disease img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.diseases .disease .name {
+    margin-bottom: 5px;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+ form input,
+ form textarea {
+    width: 100%;
+    background: var(--primary-lighter-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 15px 20px;
+}
+
+ form input:focus,
+ form textarea:focus {
+    outline: none;
+}
+ form .forgot-password  {
+    width: 100%;
+    text-align: end;
+}
+ form .forgot-password a{
+    width: 100%;
+    text-decoration: none;
+    color: var(--orange-color);
+}
+
+
+ form .error {
+    color: var(--red-color);
+    padding: 0 10px;
+}
+
+ form button {
+    padding: 13px;
+    border-radius: 10px;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    font-size: 20px;
+    transition: .3s ease;
+}
+
+ form button:active {
+    background: var(--primary-dark-color);
+    color: var(--lighter-grey);
+}
+
+
+ form .signup-link  {
+    color: var(--mid-grey);
+}
+
+ form .signup-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+
+}
+
+.button-anchor {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    font-size: 20px;
+    transition: .3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+
+
+
+
+/* ============================================HEADER============================================== */
+.header {
+    width: 100%;
+    display: flex;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.header .logo {
+    font-size: 25px;
+    color: var(--primary-color);
+}
+
+.header .icon-container {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 5px;
+    transition: .3s ease;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+.header .notification svg {
+    fill: var(--grey) !important;
+}
+
+.header .icon-container:active {
+    background: var(--light-grey);
+    color: var(--primary-light-color);
+}
+
+.header .icon-container span {
+    font-size: 25px;
+    color: var(--primary-color);
+}
+
+.header .notification-content {
+    position: absolute;
+    z-index: 80;
+    max-width: 250px;
+    display: none;
+    right: 0;
+    margin-top: 40px;
+    margin-right: 30px;
+    background: rgba(255, 255, 255, .9);
+    border-radius: 20px;
+    padding: 10px 15px;
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.2);
+
+}
+
+.header .notification-content.show {
+    display: block;
+}
+
+
+/* ============================================WEATHER============================================== */
+
+.informations {
+    width: 100%;
+    padding: 10px 15px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.informations  .weather-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    padding:  10px 20px;
+}
+
+.informations .weather-info .info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--white);
+    max-width: 135px;
+}
+
+.informations .weather-info .info .location {
+    font-size: 10px;
+}
+
+.informations .weather-info .info .temperature {
+    font-size: 20px;
+}
+
+.informations .weather-info .image-container {
+    height: 80px;
+    width: 80px;
+    overflow: hidden;
+    margin-left: auto;
+}
+
+.informations .weather-info .image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ============================================CARDS============================================== */
+
+.informations .cards-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.informations .cards-container .container-20 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 48%;
+    min-width: 160px;
+    background: var(--lighter-grey);
+    border: 1px solid var(--light-grey);
+    padding: 15px;
+}
+
+.informations .cards-container .container-20 span {
+    font-size: 45px;
+    color: rgb(98, 98, 255); 
+}
+
+.informations .cards-container .container-20 .ph {
+    color: orange;
+}
+
+.informations .cards-container .container-20 .moisture {
+    color: var(--primary-color);
+}
+
+.informations .cards-container .container-20 .card-info .title {
+    font-size: 16px;
+}
+
+.informations .cards-container .container-20 .card-info .number {
+    color: var(--mid-grey);
+}
+
+/* ============================================my plants============================================== */
+
+.cards-container-plants {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cards-container-plants .heading {
+    font-size: 12px;
+}
+
+.cards-container-plants .cards-slider {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+}
+
+.cards-container-plants .cards-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.cards-container-plants .cards-slider .card {
+    width: 100%;
+    min-width: 110px;
+    max-width: 110px;
+    height: 120px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+}
+
+.cards-container-plants .cards-slider .card .image-container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 5;
+    position: absolute;
+}
+
+.cards-container-plants .cards-slider .card .image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.cards-container-plants .cards-slider .card .filter {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.cards-container-plants .cards-slider .card .title {
+    position: relative;
+    z-index: 15;
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    padding: 10px;
+    color: var(--white);
+}
+/* ===========================================inspect for diseases============================================== */
+
+.inspect-diseases {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    margin-bottom: 100px;
+}
+
+.inspect-diseases .container-20 {
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+    background: var(--lighter-grey);
+    padding: 10px;
+}
+
+.inspect-diseases .container-20 .headings {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.inspect-diseases .container-20 .headings .texts {
+    display: flex;
+    flex-direction: column;
+}
+
+.inspect-diseases .container-20 .headings .texts .heading1 {
+    font-size: 24px;
+    color: var(--grey);
+}
+
+.inspect-diseases .container-20 .headings .texts .heading {
+    font-size: 12px;
+    color: var(--mid-grey);
+}
+
+.inspect-diseases .container-20 .headings .image-container {
+    height: 120px;
+    width: 120px;
+    overflow: hidden;
+}
+
+.inspect-diseases .container-20 .headings .image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.inspect-diseases .container-20 .button-container {
+    text-decoration: none;
+}
+
+.inspect-diseases .container-20 .button-container .button {
+    width: 100%;
+    border-radius: 25px;
+    background: var(--primary-color);
+    display: flex;
+    padding: 10px 20px;
+    transition: .3s ease;
+}
+
+.inspect-diseases .container-20 .button-container .button:active {
+    background: var(--primary-dark-color);
+    color: var(--light-grey);
+}
+
+.inspect-diseases .container-20 .button-container .button .text {
+    color: var(--white);
+    font-size: 16px;
+    width: 100%;
+}
+
+.inspect-diseases .container-20 .button-container .button span {
+    font-size: 25px;
+    color: var(--white);
+}
+
+
+
+/* ===========================================navigation============================================== */
+
+.navigation {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    background: var(--lighter-grey);
+}
+
+.navigation .nav-item {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+    width: 100px;
+    border-radius: 15px;
+    transition: .3s ease;
+    padding: 5px;
+}
+
+.navigation .nav-item .text {
+    font-size: 16px;
+}
+
+.navigation .nav-item span {
+    font-size: 25px;
+}
+
+.navigation .nav-item:active {
+    background: var(--light-grey);
+    color: var(--grey);
+}
+
+/* ===========================================detect disease============================================== */
+
+.upload-photo {
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upload-photo .img-container {
+    width: 100%;
+    background-image: url('resrources/noImagePreview.jpg'); 
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 217px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.upload-photo .img-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.upload-photo .detect-button {
+    width: 100%;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    border-radius: 10px;
+    color: var(--white);
+    gap: 10px;
+    font-size: 16px;
+    border: none;
+    text-decoration: none;
+}
+
+.upload-photo span {
+    font-size: 20px;
+
+}
+
+
+
+/* ===========================================info container============================================== */
+
+.info-container {
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===========================================HIstory============================================== */
+
+.history {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 15px;
+    gap: 10px;
+    margin-bottom: 70px;
+}
+
+.history .cards-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history .cards-container .card .delete-icon {
+    position: absolute;
+    margin-top: 25px;
+    margin-right: 10px;
+    border-radius: 50%;
+    right: 0;
+}
+
+.history .cards-container .card .delete-icon button {
+    background: var(--light-grey);
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+
+
+.history .cards-container .card {
+    text-decoration: none;
+    position: relative;
+    color: var(--black);
+}
+
+.history .cards-container .card .card-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--grey);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    padding-right: 5px;
+}
+
+.history .cards-container .card .date {
+    color: var(--grey);
+    font-size: 12px;
+    font-weight: var;
+}
+
+.history .cards-container .card .card-container .img-container {
+    width: 100%;
+    height: 100px;
+    max-width: 120px;
+}
+
+.history .cards-container .card .card-container .img-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.history .cards-container .card .card-container .text-container {
+    width: 100%;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Set number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--black);
+}
+
+.history .no-history-container {
+    padding: 15px;
+    text-align: center;
+    color: var(--grey);
+}
+
+.history .no-history-container .img-container {
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.history .no-history-container .img-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* ===========================================PLANT============================================== */
+.plant {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    margin-bottom: 70px;
+}
+
+.plant .name-classification .classification {
+    font-size: 12px;
+    color: var(--grey);
+}
+
+.plant .name-classification .name {
+    font-size: 20px;
+}
+
+.plant .image-container {
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.plant .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.plant .about {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.plant .about .text {
+    width: 100%;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 100; /* Set number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ============================================SIGNIN============================================== */
+
+.signin-container {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 20px;
+}
+
+ .image-container {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+ .image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+ .welcome {
+    width: 100%;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* ============================================PROFILE-CONTAINER============================================== */
+.profile-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-container .profile-background {
+    width: 100%;
+    background: var(--primary-color);
+    height: 90px;
+}
+
+.profile-container .image-info-container {
+    display: flex;
+    gap: 5px;
+    margin-top: -50px;
+    margin-bottom: 30px;
+    padding: 0 0 0 15px;
+}
+
+.profile-container .image-info-container .image-container {
+    height: 100px;
+    width: 100px;
+    min-width: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 5px solid var(--white);
+}
+
+.profile-container .image-info-container .image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.profile-container .image-info-container .info-container {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0;
+}
+
+.profile-container .image-info-container .info-container small {
+    color: var(--mid-grey);
+}
+
+.profile-container .settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+}
+
+.profile-container .settings-container .settings {
+    background: var(--white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    text-decoration: none;
+    color: var(--mid-grey);
+    align-items: center;
+}
+
+.profile-container .settings-container .settings:active {
+    box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.2);
+}
+
+.profile-container .logout-btn {
+    background: var(--red-color);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    margin: 20px 20px 20px 20px;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 5px solid var(--light-grey);
+    transition: border .3s ease;
+}
+
+.profile-container .logout-btn:active {
+    border-bottom: 0px;
+}
+
+/* =========================================== GET IN TOUCH CONTAINER ============================================== */
+
+.get-in-touch-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    margin-bottom: 80px;
+}
+
+.get-in-touch-container h1 {
+    color: var(--primary-color);
+}
+
+.get-in-touch-container form input,
+.get-in-touch-container form textarea {
+    border-radius: 5px;
+
+}
+
+.get-in-touch-container form textarea {
+    height: 150px;
+    resize: none;
+}
+
+
+
+/* ============================================SAMPLE-INFORMATION-CONTAINER============================================== */
+
+.sample-information-container {
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 80px;
+}
+
+.upload-photo input {
+    background: none;
+    border: none;
+    padding: 5px;
+}
+
+.sample-information-container ul {
+    margin-left: 15px;
+}
+
+.sample-information-container ul li {
+    margin-left: 10px;
+}
+
+/* ============================================SIDEBAR-CONTAINER============================================== */
+
+.sidebar-container {
+    display: none;
+}
+
+
+
+@media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ }
+@media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
+@media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
+@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (min-width:1025px) {
+/* ============================================SIDEBAR-CONTAINER============================================== */
+
+
+/* ============================================GENERAL============================================== */
+
+.icon-text {
+    font-size: 18px;
+}
+
+.icon-text span {
+    font-size: 20px;
+}
+
+.diseases-pad-15 {
+    padding: 15px;
+}
+
+.diseases {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 70px;
+}
+
+.diseases .disease {
+   font-size: 20px;
+}
+
+.diseases .disease .name {
+    margin-bottom: 5px;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+ form input,
+ form textarea {
+    width: 100%;
+    background: var(--primary-lighter-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 15px 20px;
+}
+
+ form input:focus,
+ form textarea:focus {
+    outline: none;
+}
+ form .forgot-password  {
+    width: 100%;
+    text-align: end;
+}
+ form .forgot-password a{
+    width: 100%;
+    text-decoration: none;
+    color: var(--orange-color);
+}
+
+
+ form .error {
+    color: var(--red-color);
+    padding: 0 10px;
+}
+
+ form button {
+    padding: 13px;
+    border-radius: 10px;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    font-size: 20px;
+    transition: .3s ease;
+}
+
+ form button:active {
+    background: var(--primary-dark-color);
+    color: var(--lighter-grey);
+}
+
+
+ form .signup-link  {
+    color: var(--mid-grey);
+}
+
+ form .signup-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+
+}
+
+.button-anchor {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    font-size: 20px;
+    transition: .3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+
+
+
+
+/* ===========================SIDEBAR====================================== */
+.sidebar-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background: var(--white);
+    z-index: 100;
+    margin: 10px;
+    width: 100%;
+    max-width: 200px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 8px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.sidebar-container .logo-container {
+    text-align: center;
+    border-bottom: 3px solid var(--light-grey);
+    padding: 10px 15px;
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.sidebar-container ul {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.sidebar-container ul li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 5px 20px;
+    gap: 10px;
+    color: var(--primary-color);
+    font-size: 20px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.sidebar-container ul li span {
+    font-size: 30px;
+}
+
+.sidebar-container ul li:hover {
+    background: var(--lighter-grey);
+
+}
+
+/* ============================================HEADER============================================== */
+.header {
+    display: none;
+}
+
+/* ============================================WEATHER============================================== */
+
+.informations {
+    width: 100%;
+    max-width: 1200px;
+    padding: 10px 15px 10px 230px;
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.informations  .weather-info {
+    padding: 10px 40px;
+}
+
+.informations .weather-info .info {
+    max-width: 295px;
+}
+
+.informations .weather-info .info .location {
+    font-size: 16px;
+}
+
+.informations .weather-info .info .temperature {
+    font-size: 30px;
+}
+
+.informations .weather-info .image-container {
+    height: 130px;
+    width: 130px;
+}
+
+/* ============================================CARDS============================================== */
+
+.informations .cards-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 30px;
+}
+
+.informations .cards-container .container-20 span {
+    font-size: 55px;
+}
+
+.informations .cards-container .container-20 .card-info .title {
+    font-size: 20px;
+}
+
+.informations .cards-container .container-20 .card-info .number {
+    font-size: 18px;
+}
+
+/* ============================================my plants============================================== */
+
+.cards-container-plants .heading {
+    font-size: 20px;
+}
+
+.cards-container-plants .cards-slider {
+    gap: 30px;
+}
+
+.cards-container-plants .cards-slider .card {
+    min-width: 150px;
+    max-width: 150px;
+    height: 170px;
+}
+
+.cards-container-plants .cards-slider .card .title {
+    font-size: 20px;
+}
+/* ===========================================inspect for diseases============================================== */
+
+.inspect-diseases {
+    margin-bottom: 0px;
+}
+
+.inspect-diseases .heading {
+    font-size: 20px;
+}
+
+.inspect-diseases .container-20 .headings {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0;
+}
+
+.inspect-diseases .container-20 .headings .texts {
+    margin-right: auto;
+}
+
+.inspect-diseases .container-20 .headings .texts .heading1 {
+    font-size: 32px;
+}
+
+.inspect-diseases .container-20 .headings .texts .heading {
+    font-size: 16px;
+}
+
+.inspect-diseases .container-20 .headings .image-container {
+    height: 130px;
+    width: 130px;
+}
+
+.inspect-diseases .container-20 .button-container .button {
+    border-radius: 30px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.inspect-diseases .container-20 .button-container .button:active {
+    background: var(--primary-dark-color);
+    color: var(--light-grey);
+}
+
+.inspect-diseases .container-20 .button-container .button .text {
+    color: var(--white);
+    font-size: 20px;
+    margin-right: 50px;
+    width: fit-content;
+}
+
+.inspect-diseases .container-20 .button-container .button span {
+    font-size: 25px;
+    color: var(--white);
+}
+
+
+
+/* ===========================================navigation============================================== */
+
+.navigation {
+    display: none;
+}
+
+
+
+/* ===========================================HIstory============================================== */
+
+.history {
+    max-width: 1200px;
+    padding: 15px 15px 10px 230px;
+    gap: 10px;
+    margin-bottom: 0px;
+}
+
+.history .cards-container {
+    gap: 20px;
+}
+
+.history .cards-container .card {
+    transition: transform 0.3s ease;
+}
+
+.history .cards-container .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+
+.history .cards-container .card .date {
+    font-size: 16px;
+}
+
+.history .cards-container .card .card-container .img-container {
+    height: 150px;
+    max-width: 180px;
+}
+
+.history .cards-container .card .card-container .text-container {
+    width: 100%;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Set number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 18px;
+}
+
+
+
+
+/* ===========================================PLANT============================================== */
+.plant {
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 15px 15px 15px 230px;
+    margin-bottom: 0px;
+}
+
+.plant .name-classification .classification {
+    font-size: 18px;
+}
+
+.plant .name-classification .name {
+    font-size: 34px;
+}
+
+.plant .image-container {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.plant .about {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.plant .about .text {
+    font-size: 20px;
+}
+
+
+/* ============================================PROFILE-CONTAINER============================================== */
+.profile-container {
+    margin-left: 230px;
+}
+
+.profile-container .profile-background {
+    width: 100%;
+    background: var(--primary-color);
+    height: 100px;
+}
+
+.profile-container .image-info-container {
+    display: flex;
+    gap: 5px;
+    margin-top: -50px;
+    margin-bottom: 30px;
+    padding: 0 0 0 15px;
+}
+
+.profile-container .image-info-container .image-container {
+    height: 150px;
+    width: 150px;
+}
+
+.profile-container .image-info-container .info-container {
+    font-size: 25px;
+}
+
+.profile-container .image-info-container .info-container small {
+    font-size: 18px;
+}
+
+.profile-container .settings-container .settings {
+    padding: 20px 50px;
+    transition: .3s ease;
+    font-size: 18px;
+}
+
+.profile-container .settings-container .settings span {
+    font-size: 25px;
+}
+
+.profile-container .settings-container .settings:hover {
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.profile-container .logout-btn {
+    font-size: 20px;
+    padding: 15px;
+    gap: 20px;
+    margin: 20px 20px 20px 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.profile-container .logout-btn span {
+    font-size: 25px;
+}
+
+/* ============================================SAMPLE-INFORMATION-CONTAINER============================================== */
+
+.sample-information-container {
+    padding: 15px 15px 15px 230px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 80px;
+}
+
+.sample-disease-form  {
+    width: 100%;
+    padding: 15px 15px 15px 230px;
+}
+
+.sample-disease-form .img-container {
+    height: 300px;
+}
+
+.upload-photo input {
+    background: none;
+    border: none;
+    padding: 5px;
+}
+
+.sample-information-container ul {
+    margin-left: 15px;
+}
+
+.sample-information-container ul li {
+    margin-left: 10px;
+}
+
+/* ============================================SIGNIN============================================== */
+
+.signin-container {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 20px;
+}
+
+ .image-container {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+ .image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+ .welcome {
+    width: 100%;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+
+    }
+@media (min-width:1281px) { /* hi-res laptops and desktops */ }
