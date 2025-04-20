@@ -259,7 +259,7 @@ function fetchTemperature() {
                 tempDisplay.style.fontStyle = "italic";
                 tempStatus.innerText = "OFF";
             } else {
-                tempDisplay.innerText = data.value + '%';
+                tempDisplay.innerText = data.value + '°C';
                 tempDisplay.style.color = "";
                 tempDisplay.style.fontStyle = "";
                 tempStatus.innerText = data.condition;
@@ -274,6 +274,9 @@ function fetchTemperature() {
                         break;
                     case "Normal":
                         color = "#33b5e5"; // green
+                        break;
+                    case "Warm":
+                        color = "#FFD63A"; // orange
                         break;
                     case "Hot":
                         color = "#EA7300"; // orange
