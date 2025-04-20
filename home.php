@@ -248,22 +248,51 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)) {
     <script>
 function fetchTemperature() {
     fetch('getTemp.php')
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            const tempDisplay = document.getElementById('tempSensor');
-            if (data === '-') {
+            const tempDisplay = document.getElementById('tempSensor');  // existing percentage
+            const tempStatus = document.getElementById('temperatureStatus');    // condition in notification
+
+            if (data.value === "-") {
                 tempDisplay.innerText = "OFF";
                 tempDisplay.style.color = "#ff4444";
                 tempDisplay.style.fontStyle = "italic";
+                tempStatus.innerText = "OFF";
             } else {
-                tempDisplay.innerText = data + '%';
+                tempDisplay.innerText = data.value + '%';
                 tempDisplay.style.color = "";
                 tempDisplay.style.fontStyle = "";
+                tempStatus.innerText = data.condition;
+            
+
+             // Apply color based on condition
+             let color = "";
+                switch (data.condition) {
+                    case "Cold":
+                    case "Very Cold":
+                        color = "#8E1616"; 
+                        break;
+                    case "Normal":
+                        color = "#00C851"; 
+                        break;
+                    case "Hot":
+                        color = "#33b5e5"; 
+                        break;
+                    case "Very Hot":
+                        color = "#8E1616"; 
+                        break;
+                    default:
+                        color = "#000"; 
+                }
+
+                tempStatus.style.color = color;
+                tempStatus.style.fontStyle = "normal";
             }
         })
         .catch(error => {
             console.error('Error fetching Temperature Value:', error);
             document.getElementById('tempSensor').innerText = "ERR";
+            document.getElementById('temperatureStatus').innerText = "ERR";
         });
 }
 function fetchMoisture() {
@@ -290,19 +319,19 @@ function fetchMoisture() {
                 switch (data.condition) {
                     case "Very Dry":
                     case "Dry":
-                        color = "#8E1616"; 
+                        color = "#8E1616"; //darkred
                         break;
                     case "Moist":
-                        color = "#00C851"; 
+                        color = "#00C851";  // blue
                         break;
                     case "Wet":
-                        color = "#33b5e5"; 
+                        color = "#33b5e5"; // green
                         break;
                     case "Submerged":
-                        color = "#8E1616"; 
+                        color = "#8E1616"; // dark red
                         break;
                     case "Idle":
-                        color = "#706D54"; 
+                        color = "#706D54"; // grey
                         break;
                     default:
                         color = "#000"; 
