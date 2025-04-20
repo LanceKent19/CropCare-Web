@@ -247,226 +247,118 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)) {
     <?php include_once("partials/navigation.php") ?>
     <script>
 function fetchTemperature() {
-    fetch('getTemperature.php')
+    fetch('getTemp.php')
         .then(response => response.text())
         .then(data => {
-            const tempDisplay = document.getElementById('temperatureSensor');
-            const tempStatus = document.getElementById('temperatureStatus');
-
+            const tempDisplay = document.getElementById('tempSensor');
             if (data === '-') {
                 tempDisplay.innerText = "OFF";
                 tempDisplay.style.color = "#ff4444";
                 tempDisplay.style.fontStyle = "italic";
-
-                tempStatus.innerText = "System OFF";
-                tempStatus.style.color = "gray";
-                tempStatus.style.fontStyle = "italic";
             } else {
-                const temperature = parseFloat(data);
-                tempDisplay.innerText = temperature + '°C';
+                tempDisplay.innerText = data + '%';
                 tempDisplay.style.color = "";
                 tempDisplay.style.fontStyle = "";
-
-                // Temperature conditions for Too Cold, Ideal, or Too Hot
-                if (temperature < 10) {
-                    tempStatus.innerText = "Too Cold";
-                    tempStatus.style.color = "blue";
-                    updateNotificationBadge();
-                } else if (temperature >= 10 && temperature <= 30) {
-                    tempStatus.innerText = "Ideal";
-                    tempStatus.style.color = "green";
-                } else {
-                    tempStatus.innerText = "Too Hot";
-                    tempStatus.style.color = "red";
-                    updateNotificationBadge();
-                }
-
-                tempStatus.style.fontStyle = "normal";
             }
         })
         .catch(error => {
             console.error('Error fetching Temperature Value:', error);
-            document.getElementById('temperatureSensor').innerText = "ERR";
-            document.getElementById('temperatureStatus').innerText = "Error";
-            document.getElementById('temperatureStatus').style.color = "gray";
-            updateNotificationBadge();  // Notify error condition
+            document.getElementById('tempSensor').innerText = "ERR";
         });
 }
-
 function fetchMoisture() {
     fetch('getMoisture.php')
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            const moistureDisplay = document.getElementById('moistureSensor');
-            const moistureStatus = document.getElementById('moistureStatus');
-            const moistureBadge = document.getElementById("moistureBadge");
+            const moistureDisplay = document.getElementById('moistureSensor');  // existing percentage
+            const moistureStatus = document.getElementById('moistureStatus');    // condition in notification
 
-            if (data === '-') {
+            if (data.value === "-") {
                 moistureDisplay.innerText = "OFF";
                 moistureDisplay.style.color = "#ff4444";
                 moistureDisplay.style.fontStyle = "italic";
-
-                moistureStatus.innerText = "System OFF";
-                moistureStatus.style.color = "gray";
-                moistureStatus.style.fontStyle = "italic";
+                moistureStatus.innerText = "OFF";
             } else {
-                const moisture = parseFloat(data);
-                moistureDisplay.innerText = moisture + '%';
+                moistureDisplay.innerText = data.value + '%';
                 moistureDisplay.style.color = "";
                 moistureDisplay.style.fontStyle = "";
+                moistureStatus.innerText = data.condition;
+            
 
-                // Corrected moisture conditions
-                if (moisture < 10) {
-                    moistureStatus.innerText = "Very Dry";
-                    moistureStatus.style.color = "brown";
-                    updateNotificationBadge();
-                } else if (moisture < 30) {
-                    moistureStatus.innerText = "Dry";
-                    moistureStatus.style.color = "red";
-                    updateNotificationBadge();
-                } else if (moisture >= 30 && moisture <= 40) {
-                    moistureStatus.innerText = "Idle";
-                    moistureStatus.style.color = "gray";
-                    updateNotificationBadge();
-                } else if (moisture <= 60) {
-                    moistureStatus.innerText = "Moist";
-                    moistureStatus.style.color = "green";
-                } else if (moisture <= 89) {
-                    moistureStatus.innerText = "Wet";
-                    moistureStatus.style.color = "orange";
-                } else {
-                    moistureStatus.innerText = "Submerged";
-                    moistureStatus.style.color = "darkred";
-                    updateNotificationBadge();
+             // Apply color based on condition
+             let color = "";
+                switch (data.condition) {
+                    case "Very Dry":
+                    case "Dry":
+                        color = "#8E1616"; 
+                        break;
+                    case "Moist":
+                        color = "#00C851"; 
+                        break;
+                    case "Wet":
+                        color = "#33b5e5"; 
+                        break;
+                    case "Submerged":
+                        color = "#8E1616"; 
+                        break;
+                    case "Idle":
+                        color = "#706D54"; 
+                        break;
+                    default:
+                        color = "#000"; 
                 }
 
+                moistureStatus.style.color = color;
                 moistureStatus.style.fontStyle = "normal";
             }
         })
         .catch(error => {
             console.error('Error fetching Soil Moisture Value:', error);
             document.getElementById('moistureSensor').innerText = "ERR";
-            document.getElementById('moistureStatus').innerText = "Error";
-            document.getElementById('moistureStatus').style.color = "gray";
-            updateNotificationBadge();  // Notify error condition
+            document.getElementById('moistureStatus').innerText = "ERR";
         });
 }
 
-function fetchPhLevel() {
-    fetch('getPhLevel.php')
+function fetchPh() {
+    fetch('getPh.php')
         .then(response => response.text())
         .then(data => {
             const phDisplay = document.getElementById('phSensor');
-            const phStatus = document.getElementById('phStatus');
-
             if (data === '-') {
                 phDisplay.innerText = "OFF";
                 phDisplay.style.color = "#ff4444";
                 phDisplay.style.fontStyle = "italic";
-
-                phStatus.innerText = "System OFF";
-                phStatus.style.color = "gray";
-                phStatus.style.fontStyle = "italic";
             } else {
-                const ph = parseFloat(data);
-                phDisplay.innerText = ph;
+                phDisplay.innerText = data + '%';
                 phDisplay.style.color = "";
                 phDisplay.style.fontStyle = "";
-
-                // pH conditions for acidic, neutral, or alkaline
-                if (ph < 6) {
-                    phStatus.innerText = "Acidic";
-                    phStatus.style.color = "red";
-                    updateNotificationBadge();
-                } else if (ph === 7) {
-                    phStatus.innerText = "Neutral";
-                    phStatus.style.color = "green";
-                } else if (ph > 7) {
-                    phStatus.innerText = "Alkaline";
-                    phStatus.style.color = "orange";
-                    updateNotificationBadge();
-                }
-
-                phStatus.style.fontStyle = "normal";
             }
         })
         .catch(error => {
-            console.error('Error fetching pH Level Value:', error);
+            console.error('Error fetching Ph Level:', error);
             document.getElementById('phSensor').innerText = "ERR";
-            document.getElementById('phStatus').innerText = "Error";
-            document.getElementById('phStatus').style.color = "gray";
-            updateNotificationBadge();  // Notify error condition
         });
 }
-
 function fetchHumidity() {
     fetch('getHumidity.php')
         .then(response => response.text())
         .then(data => {
             const humidityDisplay = document.getElementById('humiditySensor');
-            const humidityStatus = document.getElementById('humidityStatus');
-            const moistureBadge = document.getElementById("moistureBadge");
-
             if (data === '-') {
                 humidityDisplay.innerText = "OFF";
                 humidityDisplay.style.color = "#ff4444";
                 humidityDisplay.style.fontStyle = "italic";
-
-                humidityStatus.innerText = "System OFF";
-                humidityStatus.style.color = "gray";
-                humidityStatus.style.fontStyle = "italic";
             } else {
-                const humidity = parseFloat(data);
-                humidityDisplay.innerText = humidity + '%';
+                humidityDisplay.innerText = data + '%';
                 humidityDisplay.style.color = "";
                 humidityDisplay.style.fontStyle = "";
-
-                if (humidity < 30) {
-                    humidityStatus.innerText = "Very Low";
-                    humidityStatus.style.color = "brown";
-                    updateNotificationBadge();
-                } else if (humidity >= 30 && humidity <= 50) {
-                    humidityStatus.innerText = "Low";
-                    humidityStatus.style.color = "orange";
-                } else if (humidity > 50 && humidity <= 70) {
-                    humidityStatus.innerText = "Ideal";
-                    humidityStatus.style.color = "green";
-                } else {
-                    humidityStatus.innerText = "High";
-                    humidityStatus.style.color = "red";
-                    updateNotificationBadge();
-                }
-                humidityStatus.style.fontStyle = "normal";
             }
         })
         .catch(error => {
-            console.error('Error fetching Humidity Value:', error);
+            console.error('Error fetching Humidity Level:', error);
             document.getElementById('humiditySensor').innerText = "ERR";
-            document.getElementById('humidityStatus').innerText = "Error";
-            document.getElementById('humidityStatus').style.color = "gray";
-            updateNotificationBadge();  // Notify error condition
         });
 }
-
-function updateNotificationBadge() {
-    const badge = document.getElementById("moistureBadge");  // Badge for any critical alert
-    const moisture = document.getElementById("moistureStatus").innerText.toLowerCase();
-    const humidity = document.getElementById("humidityStatus").innerText.toLowerCase();
-    const temperature = document.getElementById("temperatureStatus").innerText.toLowerCase();
-    const ph = document.getElementById("phStatus").innerText.toLowerCase();
-
-    // Critical conditions to look for
-    const criticalKeywords = ["dry", "submerged", "very dry", "too hot", "too cold", "acidic", "alkaline", "error"];
-
-    const allStatuses = [moisture, humidity, temperature, ph];
-
-    const hasCritical = allStatuses.some(status => {
-        return criticalKeywords.some(keyword => status.includes(keyword));
-    });
-
-    badge.style.display = hasCritical ? "flex" : "none";  // Show the badge if any critical condition is met
-}
-
 
 // Initial fetch on page load
 window.onload = () => {
@@ -484,7 +376,6 @@ window.onload = () => {
     }, 300);
 };
 </script>
-
     <script src="script.js"></script>
 </body>
 </html>

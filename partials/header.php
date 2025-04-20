@@ -55,8 +55,11 @@
     <div class="notification-content"id="notificationContent">
     <div class="notification-badge" id="moistureBadge">!</div>
     Soil Moisture: <span id="moistureStatus">Loading...</span>
+    <br>
     Humidity: <span id="humidityStatus">Loading...</span>
+    <br>
     Temperature: <span id="temperatureStatus">Loading...</span>
+    <br>
     Ph Level: <span id="phStatus">Loading...</span>
     </div>
 </section>
