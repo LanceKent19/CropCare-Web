@@ -23,7 +23,7 @@ $condition = "";
 if ($temperature < 10) {
     $condition = "Very Cold";
 } else if ($temperature < 20) {
-    $temperature = "Cold";
+    $condition = "Cold";
 } else if ($temperature < 30) {
     $condition = "Normal";
 } else if ($temperature < 35) {

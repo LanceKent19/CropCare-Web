@@ -270,21 +270,21 @@ function fetchTemperature() {
                 switch (data.condition) {
                     case "Cold":
                     case "Very Cold":
-                        color = "#8E1616"; 
+                        color = "#8E1616";  // darkred
                         break;
                     case "Normal":
-                        color = "#00C851"; 
+                        color = "#33b5e5"; // green
                         break;
                     case "Hot":
-                        color = "#33b5e5"; 
+                        color = "#EA7300"; // orange
                         break;
                     case "Very Hot":
-                        color = "#8E1616"; 
+                        color = "#8E1616"; // darkred
                         break;
                     default:
                         color = "#000"; 
                 }
-
+                
                 tempStatus.style.color = color;
                 tempStatus.style.fontStyle = "normal";
             }
@@ -322,7 +322,7 @@ function fetchMoisture() {
                         color = "#8E1616"; //darkred
                         break;
                     case "Moist":
-                        color = "#00C851";  // blue
+                        color = "#FFD63A";  // yellow
                         break;
                     case "Wet":
                         color = "#33b5e5"; // green
@@ -350,42 +350,104 @@ function fetchMoisture() {
 
 function fetchPh() {
     fetch('getPh.php')
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            const phDisplay = document.getElementById('phSensor');
-            if (data === '-') {
+            const phDisplay = document.getElementById('phSensor');  // existing percentage
+            const phStatus = document.getElementById('phStatus');    // condition in notification
+
+            if (data.value === "-") {
                 phDisplay.innerText = "OFF";
                 phDisplay.style.color = "#ff4444";
                 phDisplay.style.fontStyle = "italic";
+                phStatus.innerText = "OFF";
             } else {
-                phDisplay.innerText = data + '%';
+                phDisplay.innerText = data.value + '%';
                 phDisplay.style.color = "";
                 phDisplay.style.fontStyle = "";
+                phStatus.innerText = data.condition;
+            
+
+             // Apply color based on condition
+             let color = "";
+                switch (data.condition) {
+                    case "Strongly Acidic":
+                        color = "#8E1616"; // darkred
+                        break;
+                    case "Moderately Acidic":
+                        color = "EA7300" // orange
+                        break;
+                    case "Neutral": 
+                        color = "#33b5e5";  // green 
+                        break;
+                    case "Moderately Alkaline":
+                        color = "#FFD63A";  // yellow
+                        break;
+                    case "Strongly Alkaline":
+                        color = "#8E1616"; //darkred
+                        break;
+                    default:
+                        color = "#000"; 
+                }
+
+                phStatus.style.color = color;
+                phStatus.style.fontStyle = "normal";
             }
         })
         .catch(error => {
-            console.error('Error fetching Ph Level:', error);
+            console.error('Error fetching PH Value:', error);
             document.getElementById('phSensor').innerText = "ERR";
+            document.getElementById('phStatus').innerText = "ERR";
         });
 }
 function fetchHumidity() {
     fetch('getHumidity.php')
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            const humidityDisplay = document.getElementById('humiditySensor');
-            if (data === '-') {
+            const humidityDisplay = document.getElementById('humiditySensor');  // existing percentage
+            const humidityStatus = document.getElementById('humidityStatus');    // condition in notification
+
+            if (data.value === "-") {
                 humidityDisplay.innerText = "OFF";
                 humidityDisplay.style.color = "#ff4444";
                 humidityDisplay.style.fontStyle = "italic";
+                humidityStatus.innerText = "OFF";
             } else {
-                humidityDisplay.innerText = data + '%';
+                humidityDisplay.innerText = data.value + '%';
                 humidityDisplay.style.color = "";
                 humidityDisplay.style.fontStyle = "";
+                humidityStatus.innerText = data.condition;
+            
+
+             // Apply color based on condition
+             let color = "";
+                switch (data.condition) {
+                    case "Very Dry":
+                        color = "#8E1616"; // darkred
+                        break;
+                    case "Dry":
+                        color = "EA7300" // orange
+                        break;
+                    case "Comfortable": 
+                        color = "#33b5e5";  // green 
+                        break;
+                    case "Humid":
+                        color = "#FFD63A";  // yellow
+                        break;
+                    case "Very Humid":
+                        color = "#8E1616"; //darkred
+                        break;
+                    default:
+                        color = "#000"; 
+                }
+
+                humidityStatus.style.color = color;
+                humidityStatus.style.fontStyle = "normal";
             }
         })
         .catch(error => {
-            console.error('Error fetching Humidity Level:', error);
+            console.error('Error fetching Humidity Value:', error);
             document.getElementById('humiditySensor').innerText = "ERR";
+            document.getElementById('humidityStatus').innerText = "ERR";
         });
 }
 
