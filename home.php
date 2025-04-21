@@ -302,52 +302,68 @@ function fetchMoisture() {
     fetch('getMoisture.php')
         .then(response => response.json())
         .then(data => {
-            const moistureDisplay = document.getElementById('moistureSensor');  // existing percentage
-            const moistureStatus = document.getElementById('moistureStatus');    // condition in notification
+            const moistureDisplay = document.getElementById('moistureSensor');
+            const moistureStatus = document.getElementById('moistureStatus');
+            const notificationDot = document.getElementById('notificationDot');
 
+            // Reset all classes first
+            notificationDot.className = 'status-dot';
+            
             if (data.value === "-") {
                 moistureDisplay.innerText = "OFF";
                 moistureDisplay.style.color = "#ff4444";
                 moistureDisplay.style.fontStyle = "italic";
                 moistureStatus.innerText = "OFF";
+                notificationDot.style.display = "none";
             } else {
                 moistureDisplay.innerText = data.value + '%';
                 moistureDisplay.style.color = "";
                 moistureDisplay.style.fontStyle = "";
                 moistureStatus.innerText = data.condition;
-            
 
-             // Apply color based on condition
-             let color = "";
+                // Set color of text and notification dot
+                let textColor = "";
+                let dotClass = "";
+                
                 switch (data.condition) {
                     case "Very Dry":
                     case "Dry":
-                        color = "#8E1616"; //darkred
+                    case "Submerged":
+                        textColor = "#8E1616";
+                        dotClass = "status-red";
                         break;
                     case "Moist":
-                        color = "#FFD63A";  // yellow
+                        textColor = "#FFD63A";
+                        dotClass = "status-yellow";
                         break;
                     case "Wet":
-                        color = "#33b5e5"; // green
-                        break;
-                    case "Submerged":
-                        color = "#8E1616"; // dark red
+                        textColor = "#33b5e5";
+                        dotClass = "status-green";
                         break;
                     case "Idle":
-                        color = "#706D54"; // grey
+                        textColor = "#706D54";
+                        dotClass = "status-grey";
                         break;
                     default:
-                        color = "#000"; 
+                        textColor = "#000";
+                        dotClass = "";
                 }
 
-                moistureStatus.style.color = color;
+                moistureStatus.style.color = textColor;
                 moistureStatus.style.fontStyle = "normal";
+                
+                if (dotClass) {
+                    notificationDot.classList.add(dotClass, 'show');
+                } else {
+                    notificationDot.style.display = "none";
+                }
             }
         })
         .catch(error => {
             console.error('Error fetching Soil Moisture Value:', error);
             document.getElementById('moistureSensor').innerText = "ERR";
             document.getElementById('moistureStatus').innerText = "ERR";
+            document.getElementById('notificationDot').style.display = "none";
         });
 }
 

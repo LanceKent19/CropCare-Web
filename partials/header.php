@@ -11,33 +11,33 @@
 
 </section>
 <style>
-    .notification-content {
-    display: none;
-    transition: all 0.3s ease;
-}
-
-.notification-content.show {
-    display: block;
-}
-.notification {
+/* Replace your existing notification dot styles with these */
+.icon-container.notification {
     position: relative;
-    cursor: pointer;
+    display: inline-block; /* Makes it a positioning context */
+    width: 25px; /* Match your icon size */
+    height: 25px;
 }
 
-.notification-badge {
+#notificationDot {
     position: absolute;
-    top: -5px;
-    left: -5px;
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    width: 18px;
-    height: 18px;
-    text-align: center;
-    border-radius: 50%;
-    display: none;
-    align-items: center;
-    justify-content: center;
+    top: 17px;    /* Adjust these pixel values */
+    right: 30px;  /* until properly positioned */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; /* This makes it circular */
+    /* rest of the styles same as above */
+
+}
+
+/* Keep your existing color classes */
+.status-green { background-color: #33b5e5; }
+.status-yellow { background-color: #FFD63A; }
+.status-red { background-color: #8E1616; }
+.status-grey { background-color: #706D54; }
+
+.status-dot.show {
+    display: block;
 }
 
 </style>
@@ -52,8 +52,8 @@
     <div class="icon-container notification">
         <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="#666666"><path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160ZM480-80q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80Z"/></svg>
     </div>
+    <div id="notificationDot" class="status-dot"></div>
     <div class="notification-content"id="notificationContent">
-    <div class="notification-badge" id="notificationBadge">!</div>
     Soil Moisture: <span id="moistureStatus">Loading...</span>
     <br>
     Humidity: <span id="humidityStatus">Loading...</span>
@@ -64,7 +64,7 @@
     </div>
 </section>
 
-<script>
+<script>    
     document.addEventListener("DOMContentLoaded", function() {
         const notificationIcon = document.querySelector(".notification");
         const notificationContent = document.querySelector(".notification-content");
