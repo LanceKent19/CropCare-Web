@@ -35,7 +35,7 @@
 .status-yellow { background-color: #FFD63A; }
 .status-red { background-color: #8E1616; }
 .status-grey { background-color: #706D54; }
-
+.status-orange { background-color: #EA7300; }
 .status-dot.show {
     display: block;
 }

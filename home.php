@@ -246,6 +246,53 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)) {
 
     <?php include_once("partials/navigation.php") ?>
     <script>
+        const globalConditions = {
+    temperature: null,
+    moisture: null,
+    ph: null,
+    humidity: null
+};
+
+const colorPriority = {
+    '#8E1616': 4,   // Dark Red (Highest)
+    '#EA7300': 3,   // Orange
+    '#FFD63A': 2,   // Yellow
+    '#33b5e5': 1,   // Blue (Green class)
+    '#706D54': 0     // Grey
+};
+
+const colorToClass = {
+    '#8E1616': 'status-red',
+    '#EA7300': 'status-orange',
+    '#FFD63A': 'status-yellow',
+    '#33b5e5': 'status-green',
+    '#706D54': 'status-grey'
+};
+
+function updateNotificationDot() {
+    const notificationDot = document.getElementById('notificationDot');
+    let highestPriority = -1;
+    let highestColor = null;
+
+    Object.values(globalConditions).forEach(color => {
+        if (color && colorPriority[color] !== undefined) {
+            const priority = colorPriority[color];
+            if (priority > highestPriority) {
+                highestPriority = priority;
+                highestColor = color;
+            }
+        }
+    });
+
+    notificationDot.className = 'status-dot'; // Reset classes
+
+    if (highestColor !== null) {
+        notificationDot.classList.add(colorToClass[highestColor], 'show');
+        notificationDot.style.display = 'block';
+    } else {
+        notificationDot.style.display = 'none';
+    }
+}
 function fetchTemperature() {
     fetch('getTemp.php')
         .then(response => response.json())
@@ -258,12 +305,15 @@ function fetchTemperature() {
                 tempDisplay.style.color = "#ff4444";
                 tempDisplay.style.fontStyle = "italic";
                 tempStatus.innerText = "OFF";
+                // Inside the OFF condition (data.value === "-"):
+                globalConditions.temperature = null;
+                updateNotificationDot();
             } else {
+                
                 tempDisplay.innerText = data.value + '°C';
                 tempDisplay.style.color = "";
                 tempDisplay.style.fontStyle = "";
                 tempStatus.innerText = data.condition;
-            
 
              // Apply color based on condition
              let color = "";
@@ -290,6 +340,9 @@ function fetchTemperature() {
                 
                 tempStatus.style.color = color;
                 tempStatus.style.fontStyle = "normal";
+                // Inside the else block after setting the color:
+                globalConditions.temperature = color;
+                updateNotificationDot();
             }
         })
         .catch(error => {
@@ -304,66 +357,53 @@ function fetchMoisture() {
         .then(data => {
             const moistureDisplay = document.getElementById('moistureSensor');
             const moistureStatus = document.getElementById('moistureStatus');
-            const notificationDot = document.getElementById('notificationDot');
-
-            // Reset all classes first
-            notificationDot.className = 'status-dot';
             
             if (data.value === "-") {
                 moistureDisplay.innerText = "OFF";
                 moistureDisplay.style.color = "#ff4444";
                 moistureDisplay.style.fontStyle = "italic";
                 moistureStatus.innerText = "OFF";
-                notificationDot.style.display = "none";
+               // Replace the existing notificationDot handling with:
+                globalConditions.moisture = null;
+                updateNotificationDot();
             } else {
                 moistureDisplay.innerText = data.value + '%';
                 moistureDisplay.style.color = "";
                 moistureDisplay.style.fontStyle = "";
                 moistureStatus.innerText = data.condition;
 
-                // Set color of text and notification dot
-                let textColor = "";
-                let dotClass = "";
-                
+                // Apply color based on condition
+             let color = "";
                 switch (data.condition) {
                     case "Very Dry":
                     case "Dry":
                     case "Submerged":
-                        textColor = "#8E1616";
-                        dotClass = "status-red";
+                        color = "#8E1616";
                         break;
                     case "Moist":
-                        textColor = "#FFD63A";
-                        dotClass = "status-yellow";
+                        color = "#FFD63A";
                         break;
                     case "Wet":
-                        textColor = "#33b5e5";
-                        dotClass = "status-green";
+                        color = "#33b5e5";
                         break;
                     case "Idle":
-                        textColor = "#706D54";
-                        dotClass = "status-grey";
+                        color = "#706D54";  
                         break;
                     default:
-                        textColor = "#000";
-                        dotClass = "";
+                        color = "#000";
                 }
 
-                moistureStatus.style.color = textColor;
+                moistureStatus.style.color = color;
                 moistureStatus.style.fontStyle = "normal";
-                
-                if (dotClass) {
-                    notificationDot.classList.add(dotClass, 'show');
-                } else {
-                    notificationDot.style.display = "none";
-                }
+                // Replace the existing notificationDot handling with:
+                globalConditions.moisture = color;
+                updateNotificationDot();
             }
         })
         .catch(error => {
             console.error('Error fetching Soil Moisture Value:', error);
             document.getElementById('moistureSensor').innerText = "ERR";
             document.getElementById('moistureStatus').innerText = "ERR";
-            document.getElementById('notificationDot').style.display = "none";
         });
 }
 
@@ -379,8 +419,11 @@ function fetchPh() {
                 phDisplay.style.color = "#ff4444";
                 phDisplay.style.fontStyle = "italic";
                 phStatus.innerText = "OFF";
+                // Inside the OFF condition:
+                globalConditions.ph = null;
+                updateNotificationDot();
             } else {
-                phDisplay.innerText = data.value + '%';
+                phDisplay.innerText = data.value + '';
                 phDisplay.style.color = "";
                 phDisplay.style.fontStyle = "";
                 phStatus.innerText = data.condition;
@@ -393,7 +436,7 @@ function fetchPh() {
                         color = "#8E1616"; // darkred
                         break;
                     case "Moderately Acidic":
-                        color = "EA7300" // orange
+                        color = "#EA7300" // orange
                         break;
                     case "Neutral": 
                         color = "#33b5e5";  // green 
@@ -410,6 +453,9 @@ function fetchPh() {
 
                 phStatus.style.color = color;
                 phStatus.style.fontStyle = "normal";
+                // Inside the else block after setting the color:
+                globalConditions.ph = color;
+                updateNotificationDot();
             }
         })
         .catch(error => {
@@ -430,6 +476,9 @@ function fetchHumidity() {
                 humidityDisplay.style.color = "#ff4444";
                 humidityDisplay.style.fontStyle = "italic";
                 humidityStatus.innerText = "OFF";
+                // Inside the OFF condition:
+                globalConditions.humidity = null;
+                updateNotificationDot();
             } else {
                 humidityDisplay.innerText = data.value + '%';
                 humidityDisplay.style.color = "";
@@ -444,7 +493,7 @@ function fetchHumidity() {
                         color = "#8E1616"; // darkred
                         break;
                     case "Dry":
-                        color = "EA7300" // orange
+                        color = "#EA7300" // orange
                         break;
                     case "Comfortable": 
                         color = "#33b5e5";  // green 
@@ -461,6 +510,9 @@ function fetchHumidity() {
 
                 humidityStatus.style.color = color;
                 humidityStatus.style.fontStyle = "normal";
+                // Inside the else block after setting the color:
+                globalConditions.humidity = color;
+                updateNotificationDot();
             }
         })
         .catch(error => {
@@ -479,10 +531,13 @@ window.onload = () => {
 
     // Delay interval polling slightly
     setTimeout(() => {
-        setInterval(fetchTemperature, 500);
-        setInterval(fetchMoisture, 500);
-        setInterval(fetchPh, 500);
-        setInterval(fetchHumidity, 500);
+       setInterval(() => {
+    fetchTemperature();
+    fetchMoisture();
+    fetchPh();
+    fetchHumidity();
+}, 500);
+
     }, 300);
 };
 </script>
