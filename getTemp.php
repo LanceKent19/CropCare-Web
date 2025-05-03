@@ -17,7 +17,7 @@ if ($lastTime === false || time() - intval($lastTime) > 5) {
     exit;
 }
 
-$temperature = intval($temperatureValue     );
+$temperature = intval($temperatureValue);
 $condition = "";
 
 if ($temperature < 10) {
