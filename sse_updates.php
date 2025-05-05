@@ -7,25 +7,57 @@ header('X-Accel-Buffering: no'); // Disable buffering for Nginx
 // Global variable to track last sent data
 $lastSentData = null;
 
+// Configuration - use in-memory cache for last values
+$SENSOR_FILES = [
+    'temperature' => __DIR__.'/temperature.txt',
+    'moisture' => __DIR__.'/moisture.txt',
+    'ph' => __DIR__.'/ph.txt',
+    'humidity' => __DIR__.'/humidity.txt'
+];
+
+// Use shared memory for last values (more efficient than file checks)
+$lastValues = [];
+$lastModified = 0;
+
+// Reduce sleep time to 50ms (minimum practical value)
+$sleepMicroseconds = 50000;
+
 while (true) {
-    // Get current sensor data
-    $currentData = [
-        'temperature' => @file_get_contents('temperature.txt') ?: '-',
-        'moisture' => @file_get_contents('moisture.txt') ?: '-',
-        'ph' => @file_get_contents('ph.txt') ?: '-',
-        'humidity' => @file_get_contents('humidity.txt') ?: '-',
-        'timestamp' => time()
-    ];
+    $currentData = [];
+    $changed = false;
     
-    // Only send if data changed
-    if ($lastSentData !== json_encode($currentData)) {
-        echo "data: " . json_encode($currentData) . "\n\n";
-        ob_flush();
-        flush();
-        $lastSentData = json_encode($currentData);
+    // Fast check if any file changed (directory modification time)
+    $dirModified = filemtime(__DIR__);
+    if ($dirModified > $lastModified) {
+        foreach ($SENSOR_FILES as $sensor => $file) {
+            $value = @file_get_contents($file);
+            if ($value === false) {
+                $value = '-';
+            } else {
+                $value = trim($value);
+            }
+            
+            if (!isset($lastValues[$sensor])) {
+                $changed = true;
+            } elseif ($value !== $lastValues[$sensor]) {
+                $changed = true;
+            }
+            
+            $currentData[$sensor] = $value;
+            $lastValues[$sensor] = $value;
+        }
+        $lastModified = $dirModified;
     }
     
-    // Sleep briefly to reduce CPU usage
-    usleep(300000); // 300ms
+    if ($changed || empty($lastValues)) {
+        $currentData['timestamp'] = microtime(true); // More precise timestamp
+        echo "data: ".json_encode($currentData)."\n\n";
+        ob_flush();
+        flush();
+    }
+    
+    usleep($sleepMicroseconds);
+    
+    if (connection_aborted()) break;
 }
 ?>

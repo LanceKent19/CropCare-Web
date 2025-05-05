@@ -414,8 +414,49 @@ function initSensorUpdates() {
     });
 }
 
-// Start everything when DOM is ready
-document.addEventListener('DOMContentLoaded', initSensorUpdates);
+// Add this at the top of your script
+const performance = window.performance || Date;
+const sensorCache = {};
+
+// Modify the message event handler
+eventSource.addEventListener('message', (event) => {
+    const receiveTime = performance.now();
+    try {
+        const data = JSON.parse(event.data);
+        const processStart = performance.now();
+        
+        // Only process if data actually changed
+        let needsUpdate = false;
+        Object.keys(sensorConfig).forEach(sensor => {
+            if (data.hasOwnProperty(sensor) && data[sensor] !== sensorCache[sensor]) {
+                needsUpdate = true;
+                sensorCache[sensor] = data[sensor];
+            }
+        });
+
+        if (needsUpdate) {
+            Object.keys(sensorConfig).forEach(sensor => {
+                if (data.hasOwnProperty(sensor)) {
+                    const condition = getConditionForSensor(sensor, data[sensor]);
+                    updateSensorDisplay(sensor, {
+                        value: data[sensor],
+                        condition: condition
+                    });
+                }
+            });
+            updateNotificationDot();
+            
+            // Performance tracking
+            const serverTime = data.timestamp * 1000; // Convert to ms
+            const totalLatency = receiveTime - serverTime;
+            const processingTime = performance.now() - processStart;
+            
+            console.log(`Latency: ${totalLatency.toFixed(1)}ms (Processing: ${processingTime.toFixed(1)}ms)`);
+        }
+    } catch (e) {
+        console.error('Error processing SSE message:', e);
+    }
+});
 </script>
     <script src="script.js"></script>
 </body>
