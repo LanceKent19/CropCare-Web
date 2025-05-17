@@ -241,250 +241,222 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)) {
 
     </section>
 
-
-
-
     <?php include_once("partials/navigation.php") ?>
     <script>
-function fetchTemperature() {
-    fetch('getTemp.php')
-        .then(response => response.json())
-        .then(data => {
-            const tempDisplay = document.getElementById('tempSensor');  // existing percentage
-            const tempStatus = document.getElementById('temperatureStatus');    // condition in notification
-
-            if (data.value === "-") {
-                tempDisplay.innerText = "OFF";
-                tempDisplay.style.color = "#ff4444";
-                tempDisplay.style.fontStyle = "italic";
-                tempStatus.innerText = "OFF";
-            } else {
-                tempDisplay.innerText = data.value + '°C';
-                tempDisplay.style.color = "";
-                tempDisplay.style.fontStyle = "";
-                tempStatus.innerText = data.condition;
-            
-
-             // Apply color based on condition
-             let color = "";
-                switch (data.condition) {
-                    case "Cold":
-                    case "Very Cold":
-                        color = "#8E1616";  // darkred
-                        break;
-                    case "Normal":
-                        color = "#33b5e5"; // green
-                        break;
-                    case "Warm":
-                        color = "#FFD63A"; // orange
-                        break;
-                    case "Hot":
-                        color = "#EA7300"; // orange
-                        break;
-                    case "Very Hot":
-                        color = "#8E1616"; // darkred
-                        break;
-                    default:
-                        color = "#000"; 
-                }
-                
-                tempStatus.style.color = color;
-                tempStatus.style.fontStyle = "normal";
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching Temperature Value:', error);
-            document.getElementById('tempSensor').innerText = "ERR";
-            document.getElementById('temperatureStatus').innerText = "ERR";
-        });
-}
-function fetchMoisture() {
-    fetch('getMoisture.php')
-        .then(response => response.json())
-        .then(data => {
-            const moistureDisplay = document.getElementById('moistureSensor');
-            const moistureStatus = document.getElementById('moistureStatus');
-            const notificationDot = document.getElementById('notificationDot');
-
-            // Reset all classes first
-            notificationDot.className = 'status-dot';
-            
-            if (data.value === "-") {
-                moistureDisplay.innerText = "OFF";
-                moistureDisplay.style.color = "#ff4444";
-                moistureDisplay.style.fontStyle = "italic";
-                moistureStatus.innerText = "OFF";
-                notificationDot.style.display = "none";
-            } else {
-                moistureDisplay.innerText = data.value + '%';
-                moistureDisplay.style.color = "";
-                moistureDisplay.style.fontStyle = "";
-                moistureStatus.innerText = data.condition;
-
-                // Set color of text and notification dot
-                let textColor = "";
-                let dotClass = "";
-                
-                switch (data.condition) {
-                    case "Very Dry":
-                    case "Dry":
-                    case "Submerged":
-                        textColor = "#8E1616";
-                        dotClass = "status-red";
-                        break;
-                    case "Moist":
-                        textColor = "#FFD63A";
-                        dotClass = "status-yellow";
-                        break;
-                    case "Wet":
-                        textColor = "#33b5e5";
-                        dotClass = "status-green";
-                        break;
-                    case "Idle":
-                        textColor = "#706D54";
-                        dotClass = "status-grey";
-                        break;
-                    default:
-                        textColor = "#000";
-                        dotClass = "";
-                }
-
-                moistureStatus.style.color = textColor;
-                moistureStatus.style.fontStyle = "normal";
-                
-                if (dotClass) {
-                    notificationDot.classList.add(dotClass, 'show');
-                } else {
-                    notificationDot.style.display = "none";
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching Soil Moisture Value:', error);
-            document.getElementById('moistureSensor').innerText = "ERR";
-            document.getElementById('moistureStatus').innerText = "ERR";
-            document.getElementById('notificationDot').style.display = "none";
-        });
-}
-
-function fetchPh() {
-    fetch('getPh.php')
-        .then(response => response.json())
-        .then(data => {
-            const phDisplay = document.getElementById('phSensor');  // existing percentage
-            const phStatus = document.getElementById('phStatus');    // condition in notification
-
-            if (data.value === "-") {
-                phDisplay.innerText = "OFF";
-                phDisplay.style.color = "#ff4444";
-                phDisplay.style.fontStyle = "italic";
-                phStatus.innerText = "OFF";
-            } else {
-                phDisplay.innerText = data.value + '%';
-                phDisplay.style.color = "";
-                phDisplay.style.fontStyle = "";
-                phStatus.innerText = data.condition;
-            
-
-             // Apply color based on condition
-             let color = "";
-                switch (data.condition) {
-                    case "Strongly Acidic":
-                        color = "#8E1616"; // darkred
-                        break;
-                    case "Moderately Acidic":
-                        color = "EA7300" // orange
-                        break;
-                    case "Neutral": 
-                        color = "#33b5e5";  // green 
-                        break;
-                    case "Moderately Alkaline":
-                        color = "#FFD63A";  // yellow
-                        break;
-                    case "Strongly Alkaline":
-                        color = "#8E1616"; //darkred
-                        break;
-                    default:
-                        color = "#000"; 
-                }
-
-                phStatus.style.color = color;
-                phStatus.style.fontStyle = "normal";
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching PH Value:', error);
-            document.getElementById('phSensor').innerText = "ERR";
-            document.getElementById('phStatus').innerText = "ERR";
-        });
-}
-function fetchHumidity() {
-    fetch('getHumidity.php')
-        .then(response => response.json())
-        .then(data => {
-            const humidityDisplay = document.getElementById('humiditySensor');  // existing percentage
-            const humidityStatus = document.getElementById('humidityStatus');    // condition in notification
-
-            if (data.value === "-") {
-                humidityDisplay.innerText = "OFF";
-                humidityDisplay.style.color = "#ff4444";
-                humidityDisplay.style.fontStyle = "italic";
-                humidityStatus.innerText = "OFF";
-            } else {
-                humidityDisplay.innerText = data.value + '%';
-                humidityDisplay.style.color = "";
-                humidityDisplay.style.fontStyle = "";
-                humidityStatus.innerText = data.condition;
-            
-
-             // Apply color based on condition
-             let color = "";
-                switch (data.condition) {
-                    case "Very Dry":
-                        color = "#8E1616"; // darkred
-                        break;
-                    case "Dry":
-                        color = "EA7300" // orange
-                        break;
-                    case "Comfortable": 
-                        color = "#33b5e5";  // green 
-                        break;
-                    case "Humid":
-                        color = "#FFD63A";  // yellow
-                        break;
-                    case "Very Humid":
-                        color = "#8E1616"; //darkred
-                        break;
-                    default:
-                        color = "#000"; 
-                }
-
-                humidityStatus.style.color = color;
-                humidityStatus.style.fontStyle = "normal";
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching Humidity Value:', error);
-            document.getElementById('humiditySensor').innerText = "ERR";
-            document.getElementById('humidityStatus').innerText = "ERR";
-        });
-}
-
-// Initial fetch on page load
-window.onload = () => {
-    fetchTemperature();
-    fetchMoisture();
-    fetchPh();
-    fetchHumidity();
-
-    // Delay interval polling slightly
-    setTimeout(() => {
-        setInterval(fetchTemperature, 500);
-        setInterval(fetchMoisture, 500);
-        setInterval(fetchPh, 500);
-        setInterval(fetchHumidity, 500);
-    }, 300);
+    const globalConditions = {
+    temperature: null,
+    moisture: null,
+    ph: null,
+    humidity: null
 };
+const colorPriority = {
+    '#8E1616': 4,   // Dark Red (Highest)
+    '#EA7300': 3,   // Orange
+    '#FFD63A': 2,   // Yellow
+    '#33b5e5': 1,   // Blue (Green class)
+    '#706D54': 0     // Grey
+};
+
+const colorToClass = {
+    '#8E1616': 'status-red',
+    '#EA7300': 'status-orange',
+    '#FFD63A': 'status-yellow',
+    '#33b5e5': 'status-green',
+    '#706D54': 'status-grey'
+};
+const sensorConfig = {
+    temperature: {
+        valueElement: 'tempSensor',
+        statusElement: 'temperatureStatus',
+        unit: '°C',
+        conditions: {
+            "Very Cold": "#8E1616",
+            "Cold": "#8E1616",
+            "Normal": "#33b5e5",
+            "Warm": "#FFD63A",
+            "Hot": "#EA7300",
+            "Very Hot": "#8E1616",
+            "OFF": "#ff4444"
+        }
+    },
+    moisture: {
+        valueElement: 'moistureSensor',
+        statusElement: 'moistureStatus',
+        unit: '%',
+        conditions: {
+            "Very Dry": "#8E1616",
+            "Dry": "#8E1616",
+            "Submerged": "#8E1616",
+            "Moist": "#FFD63A",
+            "Wet": "#33b5e5",
+            "Idle": "#706D54",
+            "OFF": "#ff4444"
+    }
+},
+    ph: {
+        valueElement: 'phSensor',
+        statusElement: 'phStatus',
+        unit: '%',
+        conditions: {
+            "Strongly Acidic": "#8E1616",
+            "Moderately Acidic": "#EA7300",
+            "Neutral": "#33b5e5",
+            "Moderately Alkaline": "#FFD63A",
+            "Strongly Alkaline": "#8E1616",
+            "Idle": "#706D54",
+            "OFF": "#ff4444"
+        }
+    },
+    humidity: {
+        valueElement: 'humiditySensor',
+        statusElement: 'humidityStatus',
+        unit: '%',
+        conditions: {
+            "Very Dry": "#8E1616",
+            "Dry": "#8E1616",
+            "Comfortable": "#33b5e5",
+            "Humid": "#FFD63A",
+            "Very Humid": "#EA7300",
+            "Idle": "#706D54",
+            "OFF": "#ff4444"
+        }
+    }
+};
+
+// Unified fetch function
+function fetchAllSensors() {
+    fetch('sensor_data.php')
+        .then(response => {
+            if (!response.ok) throw new Error('Network error');
+            return response.json();
+        })
+        .then(data => {
+            Object.keys(sensorConfig).forEach(sensor => {
+                updateSensorDisplay(sensor, data[sensor] || {value: "-", condition: "OFF"});
+            });
+            updateNotificationDot();
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            Object.keys(sensorConfig).forEach(sensor => {
+                const config = sensorConfig[sensor];
+                document.getElementById(config.valueElement).innerText = "ERR";
+                document.getElementById(config.statusElement).innerText = "ERR";
+                globalConditions[sensor] = null;
+            });
+            updateNotificationDot();
+        });
+}
+// Unified display update
+function updateSensorDisplay(sensor, data) {
+    const config = sensorConfig[sensor];
+    const valueElement = document.getElementById(config.valueElement);
+    const statusElement = document.getElementById(config.statusElement);
+
+    if (data.value === "-") {
+        valueElement.innerText = "OFF";
+        valueElement.style.color = config.conditions["OFF"];
+        valueElement.style.fontStyle = "italic";
+        statusElement.innerText = "OFF";
+        globalConditions[sensor] = null;
+    } else {
+        valueElement.innerText = data.value + config.unit;
+        valueElement.style.color = "";
+        valueElement.style.fontStyle = "";
+        statusElement.innerText = data.condition;
+        
+        const color = config.conditions[data.condition] || "#000";
+        statusElement.style.color = color;
+        statusElement.style.fontStyle = "normal";
+        globalConditions[sensor] = color;
+    }
+}
+
+
+function updateNotificationDot() {
+    const notificationDot = document.getElementById('notificationDot');
+    let highestPriority = -1;
+    let highestColor = null;
+
+    Object.values(globalConditions).forEach(color => {
+        if (color && colorPriority[color] !== undefined) {
+            const priority = colorPriority[color];
+            if (priority > highestPriority) {
+                highestPriority = priority;
+                highestColor = color;
+            }
+        }
+    });
+
+    notificationDot.className = 'status-dot'; // Reset classes
+
+    if (highestColor !== null) {
+        notificationDot.classList.add(colorToClass[highestColor], 'show');
+        notificationDot.style.display = 'block';
+    } else {
+        notificationDot.style.display = 'none';
+    }
+}
+
+// Initialize with WebSocket-like polling
+let sensorUpdateInterval;
+const POLL_INTERVAL = 1000; // 1 second
+
+function initSensorUpdates() {
+    fetchAllSensors(); // Initial fetch
+    
+    // Set up efficient polling
+    sensorUpdateInterval = setInterval(fetchAllSensors, POLL_INTERVAL);
+    
+    // Clean up when page unloads
+    window.addEventListener('beforeunload', () => {
+        clearInterval(sensorUpdateInterval);
+    });
+}
+
+// Add this at the top of your script
+const performance = window.performance || Date;
+const sensorCache = {};
+
+// Modify the message event handler
+eventSource.addEventListener('message', (event) => {
+    const receiveTime = performance.now();
+    try {
+        const data = JSON.parse(event.data);
+        const processStart = performance.now();
+        
+        // Only process if data actually changed
+        let needsUpdate = false;
+        Object.keys(sensorConfig).forEach(sensor => {
+            if (data.hasOwnProperty(sensor) && data[sensor] !== sensorCache[sensor]) {
+                needsUpdate = true;
+                sensorCache[sensor] = data[sensor];
+            }
+        });
+
+        if (needsUpdate) {
+            Object.keys(sensorConfig).forEach(sensor => {
+                if (data.hasOwnProperty(sensor)) {
+                    const condition = getConditionForSensor(sensor, data[sensor]);
+                    updateSensorDisplay(sensor, {
+                        value: data[sensor],
+                        condition: condition
+                    });
+                }
+            });
+            updateNotificationDot();
+            
+            // Performance tracking
+            const serverTime = data.timestamp * 1000; // Convert to ms
+            const totalLatency = receiveTime - serverTime;
+            const processingTime = performance.now() - processStart;
+            
+            console.log(`Latency: ${totalLatency.toFixed(1)}ms (Processing: ${processingTime.toFixed(1)}ms)`);
+        }
+    } catch (e) {
+        console.error('Error processing SSE message:', e);
+    }
+});
 </script>
     <script src="script.js"></script>
 </body>

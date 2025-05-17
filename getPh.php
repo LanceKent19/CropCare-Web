@@ -17,7 +17,7 @@ if ($lastTime === false || time() - intval($lastTime) > 5) {
     exit;
 }
 
-$ph = intval($phValue);
+$ph = floatval($phValue);
 $condition = "";
 
 if ($ph < 5.5) {

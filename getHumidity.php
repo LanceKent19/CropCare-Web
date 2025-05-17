@@ -26,7 +26,7 @@ if ($humidity < 20) {
     $condition = "Dry";
 } else if ($humidity < 60) {
     $condition = "Comfortable";
-} else if ($humidity < 35) {
+} else if ($humidity < 70) {
     $condition = "Warm";
 } else if ($humidity <= 80) {
     $condition = "Humid";
